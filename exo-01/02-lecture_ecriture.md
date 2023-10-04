@@ -58,7 +58,7 @@ chaine4 <- "d'amour"
 Ecrire chaine2 + chaine3 + chaine4 + chaine1
 // vos beaux yeux belle marquise me font mourrir d'amour
 Ecrire chaine2 + chaine1 + chaine3 + chaine4
-// d'amour vos beaux yeux me font mourrir d'amour belle marquise
+// d'amour vos beaux yeux me font mourrir belle marquise
 Ecrire chaine4 + chaine2 + chaine3 + chaine1
 // belle marquise d'amour vos beaux yeux me font mourrir
 Ecrire chaine1 + chaine4 + chaine2 + chaine3

@@ -42,7 +42,7 @@ nom2 <- Lire
 nom3 <- Lire
 // Ici j'assume qu'il est possible d'indexer une chaine de caractères comme un tableau de caractères  
 // Autre assomption: l'opérateur "<" est utilisé pour comparer la position dans l'alphabet de deux caractères
-If nom1[0] < nom2[0] Et nom2[0]< nom3[0] Alors
+If nom1[0] < nom2[0] Et nom2[0] < nom3[0] Alors
     Ecrire "Les noms sont entrés par ordre alphabétique"
 Sinon
     Ecrire "Les noms ne sont pas entrés par ordre alphabétique"
