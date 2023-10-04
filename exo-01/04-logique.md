@@ -1,18 +1,23 @@
 # Exercice 4.1
 
 Formulez un algorithme équivalent à l’algorithme suivant :
+```
 Si Tutu > Toto + 4 OU Tata = "OK" Alors
 Tutu ← Tutu + 1
 Sinon
 Tutu ← Tutu – 1
 Finsi
+```
 
 Réponse:  
+```
 Si Tutu - 4 <= Toto Et Tata != "OK" Alors
 Tutu <- Tutu - 1
 Sinon
 Tutu <- Tutu + 1
 FinSi
+```
+
 
 # Exercice 4.2
 
@@ -23,6 +28,7 @@ exemple, si l'utilisateur tape 21 puis 32, l'algorithme doit répondre :
 NB : on suppose que l'utilisateur entre une heure valide. Pas besoin donc de la vérifier.
 
 Réponse:  
+```
 heures  <- Lire
 minutes <- Lire + 1
 Si minutes > 60 Alors
@@ -30,6 +36,7 @@ Si minutes > 60 Alors
     minutes <- minutes % 60
 FinSi
 Ecrire "Dans une minute, il sera " + (heures % 24) + " heure(s) " + minutes
+```
 
 
 # Exercice 4.3
@@ -41,6 +48,7 @@ il sera 21 heure(s), 32 minute(s) et 9 seconde(s)".
 NB : là encore, on suppose que l'utilisateur entre une date valide.
 
 Réponse:  
+```
 heures   <- Lire
 minutes  <- Lire
 secondes <- Lire + 1
@@ -53,6 +61,7 @@ Si minutes > 60 Alors
     minutes <- minutes % 60
 FinSi
 Ecrire "Dans une seconde, il sera " + heures + " heure(s), " + minutes + " minute(s) et " + secondes + " seconde(s)"
+```
 
 
 # Exercice 4.4
@@ -62,6 +71,7 @@ et 0,08 E au-delà. Ecrivez un algorithme qui demande à l’utilisateur le nomb
 effectuées et qui affiche la facture correspondante.
 
 Réponse:  
+```
 nombre <- Lire
 prix   <- 0
 Si nombre > 30 Alors
@@ -72,6 +82,7 @@ Sinon
     prix <- 0.1 * nombre
 FinSi
 Ecrire "le prix total est de: " + prix
+```
 
 
 # Exercice 4.5
@@ -85,6 +96,7 @@ Le programme demandera donc l’âge et le sexe du Zorglubien, et se prononcera 
 fait que l’habitant est imposable.
 
 Réponse:  
+```
 age  <- Lire
 sexe <- Lire
 Si sexe == "homme" Et age > 20 Alors
@@ -94,6 +106,7 @@ SinonSi sexe == "femme" Et age >= 18 Et age <= 35 Alors
 Sinon
     Ecrire "vous n'êtes pas imposable"
 FinSi
+```
 
 
 # Exercice 4.6
@@ -109,8 +122,8 @@ battu, s'il se trouve en ballottage favorable (il participe au second tour en é
 l'issue du premier tour) ou défavorable (il participe au second tour sans avoir été en tête au premier
 tour).
 
-4 8 6 5 > 23
 Réponse:  
+```
 score1 <- Lire
 score2 <- Lire
 score3 <- Lire
@@ -128,6 +141,7 @@ SinonSi ratio > 0.125 Alors
 Sinon
     Ecrire "le candidate est battu"
 FinSi
+```
 
 
 # Exercice 4.7
@@ -153,6 +167,7 @@ traiter ce problème. Avant de se lancer à corps perdu dans cet exercice, on po
 et s'apercevoir qu'il est plus simple qu'il n'en a l'air (cela s'appelle faire une analyse !)
 
 Réponse:  
+```
 age        <- Lire
 permis     <- Lire
 accidents  <- Lire
@@ -175,7 +190,7 @@ Choix Sur points Faire
     0: Ecrire "tarif rouge"
     Autrement: Ecrire "la compagnie refuse de vous assurer"
 FinChoix
-
+```
 
 
 # Exercice 4.8
@@ -194,6 +209,7 @@ l’idée qu’un nombre A est divisible par un nombre B. Aussi, vous vous conte
 télégraphistes que A divisible par B se dit « A dp B ».
 
 Réponse:  
+```
 jour  <- Lire
 mois  <- Lire
 année <- Lire
@@ -214,3 +230,4 @@ Si jour > joursDuMois[mois - 1] Et mois > 12 Et année > 2023 Alors
 Sinon
     Ecrire "la date est valide"
 FinSi
+```

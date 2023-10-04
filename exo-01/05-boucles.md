@@ -4,11 +4,13 @@ Ecrire un algorithme qui demande à l’utilisateur un nombre compris entre 1 et
 ce que la réponse convienne.
 
 Réponse:  
+```
 nombre <- 0
 TantQue nombre < 1 Ou nombre > 3
 Faire
     nombre <- Lire
 FinTantQue
+```
 
 
 # Exercice 5.2
@@ -18,6 +20,7 @@ réponse convienne. En cas de réponse supérieure à 20, on fera apparaître un
 « Plus petit ! », et inversement, « Plus grand ! » si le nombre est inférieur à 10.
 
 Réponse:  
+```
 nombre <- 0
 valide <- faux
 TantQue valide == faux
@@ -31,6 +34,7 @@ Faire
         valide <- vrai
     FinSi
 FinTanQue
+```
 
 
 # Exercice 5.3
@@ -40,6 +44,7 @@ nombres suivants. Par exemple, si l'utilisateur entre le nombre 17, le programme
 les nombres de 18 à 27.
 
 Réponse:
+```
 nombre <- Lire
 début  <- nombre + 1
 fin    <- début + 10
@@ -47,6 +52,7 @@ Pour i Allant De début A fin Pas 1
 Faire
     Ecrire nombre
 FinPour
+```
 
 
 # Exercice 5.4
@@ -63,10 +69,12 @@ Table de 7 :
 7 x 10 = 70
 
 Réponse:
+```
 Pour i Allant De 1 A 10
 Faire
     Ecrire "7 x " + i + " = " + (7 * i)
 FinPour
+```
 
 
 # Exercice 5.6
@@ -77,6 +85,7 @@ entiers jusqu’à ce nombre. Par exemple, si l’on entre 5, le programme doit 
 NB : on souhaite afficher uniquement le résultat, pas la décomposition du calcul.
 
 Réponse:  
+```
 nombre <- Lire
 somme  <- 0
 Pour i Allant De 1 A nombre Pas 1
@@ -84,6 +93,7 @@ Faire
     somme <- somme + i
 FinPour
 Ecrire somme
+```
 
 
 # Exercice 5.7
@@ -93,6 +103,7 @@ NB : la factorielle de 8, notée 8 !, vaut
 1 x 2 x 3 x 4 x 5 x 6 x 7 x 8
 
 Réponse:  
+```
 nombre  <- Lire
 produit <- 1
 Pour i Allant De 1 A nombre Pas 1
@@ -100,6 +111,7 @@ Faire
     produit <- produit * i
 FinPour
 Ecrire produit
+```
 
 
 # Exercice 5.8
@@ -116,6 +128,7 @@ position avait été saisie ce nombre :
 C’était le nombre numéro 2
 
 Réponse:  
+```
 nombres   <- []
 actuel    <- 0
 indexMax  <- 0
@@ -136,6 +149,7 @@ Faire
 FinPour
 Ecrire "Le plus grand de ces nombres est : " + valeurMax
 Ecrire "C'était le nombre numéro " + indexMax
+```
 
 
 # Exercice 5.9
