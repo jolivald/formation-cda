@@ -60,7 +60,7 @@ Fonction comparerOrdreAlphabétique (mot1, mot2)
 FinFonction
 Si comparerOrdreAlphabétique(nom1, nom2) == vrai
 Et comparerOrdreAlphabétique(nom2, nom3) == vrai Alors
-    Ecrire les noms sont entrés par ordre alphabétique"
+    Ecrire "les noms sont entrés par ordre alphabétique"
 Sinon
     Ecrire "Les noms sont PAS entrés par ordre alphabétique"
 FinSi

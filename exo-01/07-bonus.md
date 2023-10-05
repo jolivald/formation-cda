@@ -75,7 +75,21 @@ FinSi
 Écrire un algorithme de tri à bulle (bubblesort) [article wikipédia](https://fr.wikipedia.org/wiki/Tri_%C3%A0_bulles)
 
 Réponse:  
-
+```
+tableau    <- [/* fourni en paramètre */]
+temporaire <- 0
+Pour i Allant De Longeur(tableau) - 1 A 1 Pas -1
+Faire
+    Pour j Allant De 0 A i - 1 Pas 1
+    Faire
+        Si tableau[j] > tableau[j+1] Alors
+            temporaire   <- tableau[j]
+            tableau[j]   <- tableau[j+1]
+            tableau[j+1] <- temporaire
+        FinSi
+    FinPour
+FinPour
+```
 
 # Exercice 7.19
 
