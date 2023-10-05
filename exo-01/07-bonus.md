@@ -82,7 +82,7 @@ Pour i Allant De Longeur(tableau) - 1 A 1 Pas -1
 Faire
     Pour j Allant De 0 A i - 1 Pas 1
     Faire
-        Si tableau[j] > tableau[j+1] Alors
+        Si tableau[j+1] < tableau[j+1] Alors
             temporaire   <- tableau[j]
             tableau[j]   <- tableau[j+1]
             tableau[j+1] <- temporaire
@@ -96,6 +96,42 @@ FinPour
 Écrire un algo de tri par tas (heapsort) [article wikipédia](https://fr.wikipedia.org/wiki/Tri_par_tas)
 
 Réponse:  
+```
+tableau    <- [/* fourni en paramètre */]
+longueur   <- Longueur(tableau) - 1
+temporaire <- 0
+Fonction tamiser (arbre, noeud, n)
+    k <- noeud
+    j <- 2 * k
+    TantQue j <= n
+    Faire
+        Si j < n Et arbre[j] < arbre[j+1]
+        Alors
+            j <- j + 1
+        FinSi
+        Si arbre[k] < arbre[j]
+        Alors
+            temporaire <- 2 * k
+            k <- j
+            j <- temporaire
+        Sinon
+            j <- n + 1
+        FinSi
+    FinTantQue
+FinFonction
+
+Pour i Allant De longueur / 2 A 0
+Faire
+    tamiser(tableau, i, longueur)
+FinPour
+Pour i Allant De longueur A 1
+Faire
+    temporaire <- tableau[i]
+    tableau[i] <- tableau[1]
+    tableau[1] <- temporaire
+FinPour
+
+```
 
 
 # Exercice 7.20
@@ -103,3 +139,6 @@ Réponse:
 Écrire un algo de tri par pivot (quicksort) [article wikipédia](https://fr.wikipedia.org/wiki/Tri_rapide)
 
 Réponse:  
+```
+
+```
