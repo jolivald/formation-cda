@@ -46,9 +46,8 @@ nom3      <- Lire
 Fonction comparerOrdreAlphabétique (mot1, mot2)
     taille1 <- Longueur(mot1)
     taille2 <- Longueur(mot2)
-    comparer <- vrai
     index    <- 0
-    TantQue comparer == vrai
+    TantQue vrai
     Faire
         Si index > taille1 Ou mot1[index] < mot2[index] Alors
             Retourner vrai
