@@ -40,18 +40,33 @@ non dans l’ordre alphabétique.
 
 Réponse:  
 ```
-nom1 <- Lire
-nom2 <- Lire
-nom3 <- Lire
-// Ici j'assume qu'il est possible d'indexer une chaine de caractères comme un tableau de caractères  
-// Autre assomption: l'opérateur "<" est utilisé pour comparer la position dans l'alphabet de deux caractères
-If nom1[0] < nom2[0] Et nom2[0] < nom3[0] Alors
-    Ecrire "Les noms sont entrés par ordre alphabétique"
+nom1      <- Lire
+nom2      <- Lire
+nom3      <- Lire
+Fonction comparerOrdreAlphabétique (mot1, mot2)
+    taille1 <- Longueur(mot1)
+    taille2 <- Longueur(mot2)
+    comparer <- vrai
+    index    <- 0
+    TantQue comparer == vrai
+    Faire
+        Si index > taille1 Ou mot1[index] < mot2[index] Alors
+            Retourner vrai
+        SinonSi index > taille2 Ou mot1[index] > mot2[index]
+            Retourner faux
+        Sinon // l'indice est inférieur à la taille des noms et les lettres sont égales
+            index <- index + 1
+        FinSi
+    FinTanQue
+FinFonction
+Si comparerOrdreAlphabétique(nom1, nom2) == vrai
+Et comparerOrdreAlphabétique(nom2, nom3) == vrai Alors
+    Ecrire les noms sont entrés par ordre alphabétique"
 Sinon
-    Ecrire "Les noms ne sont pas entrés par ordre alphabétique"
-Fin
-```
+    Ecrire "Les noms sont PAS entrés par ordre alphabétique"
+FinSi
 
+```
 
 # Exercice 3.4
 
