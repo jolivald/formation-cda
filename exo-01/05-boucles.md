@@ -159,6 +159,42 @@ l’utilisateur souhaite saisir de nombres. La saisie des nombres s’arrête lo
 entre un zéro.
 
 
+Réponse:  
+```
+nombre    <- -1
+nombres   <- []
+actuel    <- 0
+indexMax  <- 0
+// valeurs arbitrairement longue, en réalité il faudrait utiliser quelque chose comme Number.MAX_SAFE_INTEGER en js
+valeurMax <- -99999999999999999999999999999999999999999999999999999999999999999999999999999
+question  <- vrai
+index     <- 0
+TantQue question == vrai
+Faire
+    Ecrire "Entrez le nombre numéro " + (index + 1)
+    nombre <- Lire
+    Si nombre == 0 Alors
+        // l'utilisateur entre 0 donc on sort de la boucle
+        question <- faux
+    Sinon
+        // stocke le nombre utilisateur et incrémente l'index
+        nombres[index] <- Lire
+        index <- index + 1
+    FinSi
+FinTanQue
+Pour i Allant De 0 A Longueur(nombres) Pas 1
+Faire
+    actuel <- nombres[i]
+    Si actuel > valeurMax Alors
+        valeurMax <- actual
+        indexMax  <- i + 1
+    FinSi
+FinPour
+Ecrire "Le plus grand de ces nombres est : " + valeurMax
+Ecrire "C'était le nombre numéro " + indexMax
+```
+
+
 # Exercice 5.10
 
 Lire la suite des prix (en euros entiers et terminée par zéro) des achats d’un client.
@@ -166,6 +202,40 @@ Calculer la somme qu’il doit, lire la somme qu’il paye, et simuler la remise
 affichant les textes "10 Euros", "5 Euros" et "1 Euro" autant de fois qu’il y a de coupures de
 chaque sorte à rendre.
 
+Réponse:  
+```
+question <- vrai
+prix     <- 0
+total    <- 0
+somme    <- 0
+rendu    <- 0
+TantQue question == vrai
+Faire
+    Ecrire "Entrez le prix d'un achat"
+    prix <- Lire
+    Si prix == 0 Alors
+        question <- faux
+    Sinon
+        total <- total + prix
+    FinSi
+FinTanQue
+Ecrire "Entrez la somme payée"
+somme <- Lire
+rendu <- somme - total
+TantQue rendu > 0
+Faire
+    Si rendu >= 10 Alors
+        Ecrire "10 euros"
+        rendu <- rendu - 10
+    SinonSi rendu >= 5 Alors
+        Ecrire "5 euros"
+        rendu <- rendu - 5
+    Sinon
+        Ecrire "1 euro"
+        rendu <- rendu - 1
+    FinSi
+FinTanQue
+```
 
 # Exercice 5.11
 
@@ -184,3 +254,30 @@ NB : cet algorithme peut être écrit d’une manière simple, mais relativement
 performante. Ses performances peuvent être singulièrement augmentées par une petite
 astuce. Vous commencerez par écrire la manière la plus simple, puis vous identifierez le
 problème, et écrirez une deuxième version permettant de le résoudre.
+
+Réponse:  
+```
+partants     <- Lire
+joués        <- Lire
+restants     <- partants - joués
+factPartants <- 1
+factjoués    <- 1
+factRestants <- 1
+ordre        <- 0
+désordre     <- 0
+
+Pour i Allant De 1 A partants Pas 1
+Faire
+    factPartants <- factPartants * i
+    Si i <= joués Alors
+        factJoués <- factJoués * i
+    FinSi
+    Si i <= restants Alors
+        factRestants <- factRestants * i
+    FinSi
+FinPour
+ordre    <- factPartants / factRestants
+désordre <- factPartants / (factJoués * factRestants)
+Ecrire "Dans l'ordre : une chance sur " + ordre + " de gagner"
+Ecrire "Dans le désordre : une chance sur " + désordre + " de gagner"
+```
