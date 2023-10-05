@@ -173,14 +173,14 @@ permis     <- Lire
 accidents  <- Lire
 ancienneté <- Lire
 points     <- 0
-Si age > 25 Alors
+Si age >= 25 Alors
     points <- points + 1
 FinSi
 Si permis > 2 Alors
     points <- points + 1
 FinSi
 points <- points - accidents
-Si points > 0 Et ancienneté > 1 Alors
+Si points > 0 Et ancienneté >= 1 Alors
     points <- points + 1
 FinSi
 Choix Sur points Faire
