@@ -65,8 +65,8 @@ Et comparerOrdreAlphabétique(nom2, nom3) == vrai Alors
 Sinon
     Ecrire "Les noms sont PAS entrés par ordre alphabétique"
 FinSi
-
 ```
+
 
 # Exercice 3.4
 
