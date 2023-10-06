@@ -78,7 +78,7 @@ Réponse:
 ```
 tableau    <- [/* fourni en paramètre */]
 temporaire <- 0
-Pour i Allant De Longeur(tableau) - 1 A 1 Pas -1
+Pour i Allant De Longeur(tableau) - 1 A 0 Pas -1
 Faire
     Pour j Allant De 0 A i - 1 Pas 1
     Faire
