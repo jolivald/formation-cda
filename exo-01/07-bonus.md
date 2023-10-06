@@ -51,7 +51,7 @@ tableau2 <- [/* fourni en paramètres */]
 taille   <- Longueur(tableau1)
 index    <- 0
 comparer <- vrai
-Si taille 1 != Longueur(tableau2) Alors
+Si taille != Longueur(tableau2) Alors
     Ecrire "les deux tableaux sont différents"
 Sinon
     TantQue comparer == vrai
