@@ -140,5 +140,42 @@ FinPour
 
 Réponse:  
 ```
+tableau    <- [/* fourni en paramètre */]
+temporaire <- 0
+index      <- 0
+pivot      <- 0
+Fonction partition (liste, premier, dernier, pivot)
+    temporaire     <- liste[dernier]
+    liste[dernier] <- liste[pivot]
+    liste[pivot]   <- temporaire
+    index          <- premier
+    Pour i Allant De premier A dernier Pas 1
+    Faire
+        Si liste[i] <= lister[dernier]
+        Alors
+            temporaire   <- liste[index]
+            liste[index] <- liste[j]
+            liste[j]     <- temporaire
+            index <- index + 1
+        FinSi
+    FinPour
+    temporaire     <- liste[index]
+    liste[index]   <- liste[dernier]
+    liste[dernier] <- temporaire
+    Retourner index
+FinFonction
 
+Function quicksort (liste, premier, dernier)
+    Si premier < dernier
+    Alors
+        // ici j'assume la présence d'une fonction "Random" qui renvoie un entier aléatoire
+        // compris entre les paramètres premier et dernier (inclusif) 
+        pivot <- Random(premier, dernier)
+        pivot <- partition(liste, premier, dernier, pivot)
+    FinSi
+    quicksort(liste, premier, pivot - 1)
+    quicksort(liste, pivot + 1, dernier)
+FinFunction
+
+quicksort(tableau, 0, Longueur(tableau) - 1)
 ```
