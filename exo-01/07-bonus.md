@@ -82,7 +82,7 @@ Pour i Allant De Longeur(tableau) - 1 A 0 Pas -1
 Faire
     Pour j Allant De 0 A i - 1 Pas 1
     Faire
-        Si tableau[j+1] < tableau[j+1] Alors
+        Si tableau[j+1] < tableau[j] Alors
             temporaire   <- tableau[j]
             tableau[j]   <- tableau[j+1]
             tableau[j+1] <- temporaire
