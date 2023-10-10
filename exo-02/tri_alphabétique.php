@@ -12,7 +12,9 @@ function isInAlphabeticOrder(string $a, string $b, string $c):  bool {
   <body>
     <h3>Ordre alphabétique?</h3>
     <hr/>
+
     <?php if (empty($_GET)): ?>
+
     <form method="GET" action="???">
       <label for="name_1">
           Entrer le 1er nom: <input type="text" id="name_1" name="name_1" />
@@ -28,10 +30,16 @@ function isInAlphabeticOrder(string $a, string $b, string $c):  bool {
       <br/>
       <button type="submit">Envoyer</button>
     </form>
+
     <?php else: ?>
+
       <p>Les noms sont entrés par ordre alphabétique:
+
           <?= isInAlphabeticOrder($_GET["name_1"], $_GET["name_2"], $_GET["name_3"]) ? "OUI" : "NON"; ?>
+          
       </p>
+
     <?php endif; ?>
+
   </body>
 </html>
