@@ -15,7 +15,7 @@ function isInAlphabeticOrder(string $a, string $b, string $c):  bool {
 
     <?php if (empty($_GET)): ?>
 
-    <form method="GET" action="???">
+    <form method="GET" action="tri_alphabétique.php">
       <label for="name_1">
           Entrer le 1er nom: <input type="text" id="name_1" name="name_1" />
       </label>
