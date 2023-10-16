@@ -37,16 +37,46 @@ $changeLimits = [
   1     => 30  // 0.3
 ];
 
+// calcul le total d'une liste de figures => compte
+function getTotalCash (array $figuresCount): int
+{
+  $moneyAmount = 0;
+  foreach ($figuresCount as $figure => $amount) {
+    $moneyAmount += $figure * $amount;
+  }
+  return $moneyAmount;
+}
+
+function giveBackChange (array $cashAvailable, int $totalAmount): array
+{
+  $cashBack = [];
+  // parcours le fond de caisse pour définir comment rendre la monnaie
+  foreach ($cashAvailable as $figure => $amount) {
+    // la figure est disponible et inférieure au montant dû
+    if ($amount > 0 && $figure <= $totalAmount) {
+      // combien de multiples possible dans la monnaie à rendre?
+      // $figureCount = floor($totalReturned / $figure);
+      $figureCount = intdiv($totalAmount, $figure);
+      if ($figureCount > $amount) {
+        $figureCount = $amount;
+      }
+      if ($figureCount > 0) {
+        $cashBack[strval($figure)] = $figureCount;
+        $totalAmount              -= $figureCount * $figure;
+      }
+    }
+  }
+  return $cashBack;
+}
+
 // fonctionnement de la caisse enregistreuse
 function cashRegister(int $totalAmount, array $moneyGiven): array
 {
   global $cashFund;
 
   // calcul du total payé par le client
-  $moneyAmount = 0;
-  foreach ($moneyGiven as $figure => $amount) {
-    $moneyAmount += $figure * $amount;
-  }
+  $moneyAmount = getTotalCash($moneyGiven);
+
   // erreur si le total payé est inférieur au montant dû
   if ($moneyAmount < $totalAmount) {
     throw new \Exception("Le client n'a pas donné suffisamment d'argent pour couvrir le paiement.");
@@ -54,99 +84,95 @@ function cashRegister(int $totalAmount, array $moneyGiven): array
 
   // calcul de la monnaie à rendre au client
   $totalReturned = $moneyAmount - $totalAmount;
-  $moneyReturned = [];
 
   // ajoute l'argent donné par le client au fond de caisse
   foreach ($moneyGiven as $figure => $amount) {
     $cashFund[$figure] += $amount;
   }
 
-  // parcours le fond de caisse pour définir comment rendre la monnaie
-  foreach ($cashFund as $figure => $amount) {
-    // la figure est disponible et inférieure au montant dû
-    if ($amount > 0 && $figure <= $totalReturned) {
-      // combien de multiples possible dans la monnaie à rendre?
-      $figureCount = floor($totalReturned / $figure);
-      if ($figureCount > $amount) {
-        $figureCount = $amount;
-      }
-      if ($figureCount > 0) {
-        $moneyReturned[strval($figure)] = $figureCount;
-        $totalReturned                 -= $figureCount * $figure;
-      }
-    }
+  $cashReturned = giveBackChange($cashFund, $totalReturned);
+
+  // retire la monnaie rendue du fond de caisse
+  foreach($cashReturned as $figure => $value) {
+    $cashFund[$figure] -= $value;
   }
+
   // invoque la routine utilisant le monnayeur
   //computeChange();
 
   // liste des figures avec leurs montants respectifs pour le rendu de la monnaie
-  return $moneyReturned;
+  return $cashReturned;
 };
 
-/*
-  1. trier le tiroir caisse par nombre de figures ($amount)
-  2. définir le nombre optimal dans le tiroir caisse
-Valeur pièce…….. Valeur rouleau…… Nombre de pièces
-0.01...……………………. 0.50...………………….. 50
-0.02...……………………. 1.00...………………….. 50
-0.05...……………………. 2.50...………………….. 50
-0.10...……………………. 4.00...………………….. 40
-0.20...……………………..8.00...…...…...… 40
-0.50...……………………..20.00...…………………. 40
-1.00...……………………..25.00...…………………. 25
-2.00...……………………..50.00...…………………. 25 
-
-définir la priorité d'échange en fonction des limites du monnayeur ?
-*/
-function computeChange()
+// définit les priorités d'échanges avec le monnayeur
+function prepareChange()
 {
   global $cashFund;
-  // récupère les liste de figures et nombres disponibles dans le fond de caisse
-  $figures = array_keys($cashFund);
-  $amounts = array_values($cashFund);
-  // tri à bulles en fonction du nombre de figures disponibles
-  for ($i = 0; $i < count($amounts) - 1; $i++) {
-    for ($j = 0; $j < $i - 1; $j++) {
-      if ($amounts[$j + 1] < $amounts[$j]) {
-        [$amounts[$j + 1], $amounts[$j]] = [$amounts[$j], $amounts[$j + 1]];
-        [$figures[$j + 1], $figures[$j]] = [$figures[$j], $figures[$j + 1]];
-      }
-    }
+  global $changeLimits;
+  // calcul des différences entre limites monnayeur et fond de caisse pondérées par la valeur des figures
+  $diffLimits = [];
+  foreach ($changeLimits as $figure => $limit) {
+    $diffLimits[$figure] = ($limit - $cashFund[$figure]) * $figure;
   }
-  $sortedCashFund = array_combine($figures, $amounts);
-  return $sortedCashFund;
+  // tri les différences en respectant les associations clé => valeur
+  uasort($diffLimits, function ($a, $b){ return $a < $b; });
+
+  // il y a 15 figures en tout
+
+  // prends les 5 premières comme requête monnayeur
+  $neededFigures = array_slice($diffLimits, 0, 5, true);
+  foreach ($neededFigures as $figure => &$value) {
+    $value = true;
+  }
+  // prends les 5 dernières pour envoyer au monnayeur
+  $sendedFigures = array_slice($diffLimits, 10, 15, true);
+  foreach ($sendedFigures as $fogure => &$value) {
+    $value = intdiv($value,  2);
+    if ($value == 0){ $value++; }
+  }
+
+  return [
+    "cash"    => $sendedFigures,
+    "request" => $neededFigures
+  ];
 };
 
 // fonctionnement du monnayeur
 function changeMachine(array $moneyToChange, array $preferedFigures): array
 {
-  global $cashFund;
+  global $changeLimits;
+
+  // crée une copy locale des limites du monnayeur
+  $limits = array_slice($changeLimits, 0);
+
+  // calcule le montant total passé pour faire de la monnaie
+  $moneyAmount = getTotalCash($moneyToChange);
+
+  while ($moneyAmount > 0) {
+    // boucle sur les figures demandés
+    foreach ($preferedFigures as $figure => $value) {
+
+    }
+  }
+
+  // impossible de rendre l'ensemble de la monnaie avec les figures demandées uniquement
+  if ($moneyAmount > 0) {
+
+  }
 
   $moneyReturned = [];
   return $moneyReturned;
 };
 
-// tri à bulles
-function bubbleSort($list)
-{
-  for ($i = 0; $i < count($list) - 1; $i++) {
-    for ($j = 0; $j < $i - 1; $j++) {
-      if ($list[$j + 1] > $list[$j]) {
-        [$list[$j + 1], $list[$j]] = [$list[$j], $list[$j + 1]];
-      }
-    }
-  }
-}
-
 // ---8<---
 
 // à payer: 103€32 et payé: 150€
-$result = cashRegister(10332, [
+$cashReturned = cashRegister(10332, [
   10000 => 1,
   5000 => 1
 ]);
 
 
-$temp = computeChange();
+$tempTest = prepareChange();
 
-echo "ok";
+echo "eof";
