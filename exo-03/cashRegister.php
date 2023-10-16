@@ -164,7 +164,6 @@ function changeMachine(): array
       $cashBack[$figure] += $value;
     }
   }
-  var_dump($cashBack);
 
   // ajoute la monnaie au tiroir caisse
   foreach ($cashBack as $figure => $value) {
