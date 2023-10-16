@@ -97,15 +97,14 @@ function cashRegister(int $totalAmount, array $moneyGiven): array
     $cashFund[$figure] -= $value;
   }
 
-  // invoque la routine utilisant le monnayeur
-  //computeChange();
+  changeMachine();
 
   // liste des figures avec leurs montants respectifs pour le rendu de la monnaie
   return $cashReturned;
 };
 
-// définit les priorités d'échanges avec le monnayeur
-function prepareChange()
+// fonctionnement du monnayeur
+function changeMachine(): array
 {
   global $cashFund;
   global $changeLimits;
@@ -119,60 +118,77 @@ function prepareChange()
 
   // il y a 15 figures en tout
 
-  // prends les 5 premières comme requête monnayeur
+  // prends les 5 premières figures comme requête monnayeur
   $neededFigures = array_slice($diffLimits, 0, 5, true);
   foreach ($neededFigures as $figure => &$value) {
     $value = true;
   }
-  // prends les 5 dernières pour envoyer au monnayeur
-  $sendedFigures = array_slice($diffLimits, 10, 15, true);
-  foreach ($sendedFigures as $fogure => &$value) {
+  // prends les 5 dernières figures pour envoyer au monnayeur
+  $sendedLimits  = array_slice($diffLimits, 10, 15, true);
+  $sendedFigures = array_fill_keys(array_keys($sendedLimits), 0);
+
+  foreach ($sendedFigures as $figure => &$value) {
+    // prends la moitié disponible dans le tiroir caisse (un au minimum)
     $value = intdiv($value,  2);
     if ($value == 0){ $value++; }
   }
 
-  return [
-    "cash"    => $sendedFigures,
-    "request" => $neededFigures
-  ];
-};
-
-// fonctionnement du monnayeur
-function changeMachine(array $moneyToChange, array $preferedFigures): array
-{
-  global $changeLimits;
-
   // crée une copy locale des limites du monnayeur
-  $limits = array_slice($changeLimits, 0);
+  $limits = $changeLimits;
 
   // calcule le montant total passé pour faire de la monnaie
-  $moneyAmount = getTotalCash($moneyToChange);
+  $moneyAmount = getTotalCash($sendedFigures);
 
+  // crée un tableau contenant toutes les figures avec pour valeur 0
+  $cashBack = array_fill_keys(array_keys($limits), 0);
+  $jobDone  = false;
   while ($moneyAmount > 0) {
     // boucle sur les figures demandés
-    foreach ($preferedFigures as $figure => $value) {
-
+    //foreach ($preferedFigures as $figure => $value) {
+    foreach ($neededFigures as $figure => $value) {
+      // la figure est disponible et inférieure au montant à rendre
+      if ($limits[$figure] > 0 && $figure <= $moneyAmount){
+        $cashBack[$figure]++;
+        $limits[$figure]--;
+      } else {
+        break 2;
+        $jobDone = true;
+      }
     }
   }
-
-  // impossible de rendre l'ensemble de la monnaie avec les figures demandées uniquement
+  // impossible de rendre de la monnaie avec les figures demandées uniquement
   if ($moneyAmount > 0) {
+    // récupère le montant restant à donner en fonction des limites monnayeur
+    $addToCashBack = giveBackChange($limits, $moneyAmount);
+    foreach($addToCashBack as $figure => $value) {
+      $cashBack[$figure] += $value;
+    }
+  }
+  var_dump($cashBack);
 
+  // ajoute la monnaie au tiroir caisse
+  foreach ($cashBack as $figure => $value) {
+    $cashFund[$figure] += $value;
   }
 
-  $moneyReturned = [];
-  return $moneyReturned;
+  return $cashBack;
 };
 
-// ---8<---
+// ---8<--- tests
 
-// à payer: 103€32 et payé: 150€
-$cashReturned = cashRegister(10332, [
+// à payer: 103€32, payé: 150€, rendu: 46.68
+$cashReturned_1 = cashRegister(10332, [
   10000 => 1,
   5000 => 1
 ]);
+$totalReturned_1 = getTotalCash($cashReturned_1) / 100;
 
-
-$tempTest = prepareChange();
+// à payer: 77€81, payé: 104€, rendu: 26€19
+$cashReturned_2 = cashRegister(7781, [
+  5000 => 2,
+  200  => 1,
+  100  => 2
+]);
+$totalReturned_2 = getTotalCash($cashReturned_2) / 100;
 
 echo "eof";
