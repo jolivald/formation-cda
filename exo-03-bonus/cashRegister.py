@@ -97,10 +97,12 @@ def changeMachine():
   global changeLimits
   global allFigures
 
+  # compute differences between limits and cash fund weighted by figure values
   diffLimits = allFigures.copy()
   for figure, limit in changeLimits.items():
     diffLimits[figure] = (limit - cashFund[figure]) * figure
 
+  # sort differences
   diffLimits = sorted(
     diffLimits.items(),
     key=lambda item: item[1],
@@ -112,6 +114,7 @@ def changeMachine():
   # last 5 figures are sended to change machine
   sendedFigures = dict(diffLimits[10:])
 
+  # take half of available figures in cash fund (one minimum)
   for figure, amount in sendedFigures.items():
     value =  amount // 2
     sendedFigures[figure] = value if value > 0 else 1
@@ -121,13 +124,18 @@ def changeMachine():
     #   sendedFigures[figure] += 1
     # cashFund[figure] -= sendedFigures[figure]
   
+  # local copy of change machine limimts
   limits      = changeLimits.copy()
+  # total amount passed to cash machine
   moneyAmount = getTotalCash(sendedFigures)
+  # dict containing all figures with value 0
   cashBack    = allFigures.copy()
-  jobDone     = False
 
+
+  jobDone     = False
   while moneyAmount > 0 and jobDone is False:
     for figure, amount in neededFigures.items():
+      # figure available and lte to amount to give back
       if limits[figure] > 0 and figure <= moneyAmount:
         cashBack[figure] += 1
         limits[figure]   -= 1
@@ -136,11 +144,14 @@ def changeMachine():
         jobDone = True
         break
 
+  # unable to give monney back using only requested figures
   if moneyAmount > 0:
+    # amount to give back according to change machine limits
     addToCashBack = giveBackChange(limits, moneyAmount)
     for figure, amount in addToCashBack.items():
       cashBack[figure] += amount
   
+  # add monney to cash fund
   for figure, amount in cashBack.items():
     cashFund[figure] += amount
 
@@ -157,8 +168,7 @@ cashReturned_1 = cashRegister(10332, {
 totalReturned_1 = getTotalCash(cashReturned_1) /100
 
 # à payer: 77€81, payé: 104€, rendu: 26€19
-# TODO: fixme rendu monnaie faux /!\
-cashReturned_2 = cashRegister(10332, {
+cashReturned_2 = cashRegister(7781, {
   5000: 2,
   200:  1,
   100:  2
