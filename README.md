@@ -10,7 +10,5 @@ Promotion du 02 octobre 2023 au 7 septembre 2024
     * [Version python](exo-03-bonus)
  4. [Horloge PHP CLI](exo-04)
  5. [Spotifake](exo-05)
-<<<<<<< HEAD
-
-=======
->>>>>>> ed03fe630d942c91f9d466c3f578a941e45f1e51
+ 6. [The legend of Azou](exo-06)
+ 
