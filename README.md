@@ -9,5 +9,5 @@ Promotion du 02 octobre 2023 au 7 septembre 2024
  3. [Caisse enregistreuse](exo-03)
     * [Version python](exo-03-bonus)
  4. [Horloge PHP CLI](exo-04)
-
+ 5. [Spotifake](exo-05)
 
