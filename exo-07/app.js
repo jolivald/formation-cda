@@ -1,11 +1,13 @@
+import 'dotenv/config';
 import express from 'express';
 import hbs from 'hbs';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.js';
 import userRouter from './routes/user.js';
 
+
 const app   = express();
-const port  = 3000;
+const port  = process.env.APP_PORT;
 const roles = {
   1: 'administrator',
   2: 'scrum master',
