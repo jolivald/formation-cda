@@ -5,10 +5,16 @@ import { userSchema } from './User';
 export const cardSchema = new mongoose.Schema({
   title: String,
   content: String,
-  priority: Number,
+  assigned: [userSchema],
   estimate: Number,
-  size: Number,
-  assigned: [userSchema]
+  priority: {
+    type: Number,
+    enum: [0, 1, 2, 3, 4]
+  },
+  size: {
+    type: String,
+    enum: ['xs', 's', 'm', 'l', 'xl']
+  }
 }, { timestamps: true });
 
 
