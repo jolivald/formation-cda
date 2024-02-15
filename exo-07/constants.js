@@ -1,3 +1,3 @@
-export const ROLE_USER = 1;
-export const ROLE_ADMIN = 2;
-export const ROLE_SCRUM_MASTER = 3;
+export const ROLE_USER = 100;
+export const ROLE_SCRUM_MASTER = 200;
+export const ROLE_ADMINISTRATOR = 300;

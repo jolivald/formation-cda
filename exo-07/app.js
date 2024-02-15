@@ -6,9 +6,8 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import flash from 'connect-flash';
-
 import authRouter from './routes/auth.js';
-import userRouter from './routes/user.js';
+//import userRouter from './routes/user.js';
 
 
 const { APP_PORT, MONGODB_URI, SESSION_SECRET } = process.env;
@@ -39,14 +38,15 @@ app.use(passport.session());
 
 // routes
 app.use('/', authRouter);
-app.use('/user', userRouter);
+//app.use('/user', userRouter);
 
 // debug
 app.get('/', (req, res) => {
   res.send(`Hello ${req.user ? req.user.username : 'world'} !`);
 });
 
-const main = async () => {
+// connect db then start server
+(async () => {
   try {
     await mongoose.connect(MONGODB_URI);
     app.listen(APP_PORT, () => console.log(`App started at: http://localhost:${APP_PORT}`));
@@ -54,6 +54,4 @@ const main = async () => {
     console.error(error);
     process.exit(1);
   }
-};
-
-main();
+})();

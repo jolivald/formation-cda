@@ -1,7 +1,10 @@
 import mongoose from 'mongoose';
+import { cardSchema } from './Card';
+
+export const boardSchema = new mongoose.Schema({
+  title: String,
+  cards: [cardSchema]
+}, { timestamps: true });
 
 
-const Board = new mongoose.Schema({}, { timestamps: true });
-
-
-export default mongoose.model('Board', Board);
+export default mongoose.model('Board', boardSchema);
