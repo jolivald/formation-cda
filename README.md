@@ -11,4 +11,5 @@ Promotion du 02 octobre 2023 au 7 septembre 2024
  4. [Horloge PHP CLI](exo-04)
  5. [Spotifake](exo-05)
  6. [The legend of Azou](exo-06)
+ 7. [Kanban](exo-07)
  
