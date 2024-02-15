@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import hbs from 'hbs';
+import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth.js';
 import userRouter from './routes/user.js';
@@ -29,6 +30,15 @@ app.use('/', authRouter);
 app.use('/user', userRouter);
 
 
-app.listen(port, () => {
-  console.log(`Kanban application started: http://localhost:${port}`);
-});
+
+const main = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    app.listen(port, () => console.log(`App started at: http://localhost:${port}`));
+  } catch(error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+main();
