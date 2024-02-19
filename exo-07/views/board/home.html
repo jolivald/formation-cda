@@ -1,0 +1,28 @@
+{{#> layout }}
+
+  <style>
+    form.board {
+      display: inline;
+    }
+  </style>
+
+  <form action="/board/create" method="GET" class="board">
+    <button type="submit">Create a new board</button>
+  </form>
+
+  <dl>
+    {{#each boards}}
+      <dt><strong>{{this.title}}</strong> - {{this.cards.length}} card(s)</dt>
+      <dd>
+        <form action="/board/update/{{this._id}}" method="GET" class="board">
+          <button type="submit">Update</button>
+        </form>
+        <form action="/board/delete/{{this._id}}" method="GET" class="board">
+          <button type="submit">Delete</button>
+        </form>
+      </dd>
+      <dd>Last update: {{this.updatedAt}}</dd>
+    {{/each}}
+  </dl>
+
+{{/ layout}}

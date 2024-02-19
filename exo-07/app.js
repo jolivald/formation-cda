@@ -1,4 +1,6 @@
 import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import express from 'express';
 import passport from 'passport';
 import hbs from 'hbs';
@@ -7,21 +9,20 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import flash from 'connect-flash';
 import authRouter from './routes/auth.js';
-//import userRouter from './routes/user.js';
+import boardRouter from './routes/board.js'
+import { flashInfoMessages } from './controllers/middlewares.js';
 
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const { APP_PORT, MONGODB_URI, SESSION_SECRET } = process.env;
-const app   = express();
-const port  = process.env.APP_PORT;
-const roles = {
-  1: 'administrator',
-  2: 'scrum master',
-  3: 'user'
-};
+
+const app = express();
 
 // config
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
+
+hbs.registerPartials(__dirname + '/views/partials', err => {});
 
 // middlewares
 app.use(express.json());
@@ -33,16 +34,24 @@ app.use(session({
   saveUninitialized: true
 }));
 app.use(flash());
+app.use(flashInfoMessages);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 // routes
 app.use('/', authRouter);
-//app.use('/user', userRouter);
+app.use('/board', boardRouter);
 
 // debug
 app.get('/', (req, res) => {
-  res.send(`Hello ${req.user ? req.user.username : 'world'} !`);
+  const username = req.user ? req.user.username : 'world';
+  const role = req.user ? req.user.role : 0;
+  res.render('home', {
+    username,
+    role,
+    title: 'Home'
+  });
 });
 
 // connect db then start server

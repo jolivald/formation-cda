@@ -1,0 +1,13 @@
+{{#> layout }}
+
+  <form action="{{action}}" method="POST">
+    <input type="hidden" name="id" value="{{board._id}}">
+    <section>
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" required autofocus value="{{board.title}}">
+    </section>
+    <p>Last update: {{board.updatedAt}}</p>
+    <button type="submit">Update</button>
+  </form>
+
+{{/ layout}}

@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kanban - {{title}}</title>
-</head>
-<body>
-  <h1>Kanban - {{title}}</h1>
-  <hr>
+{{#> layout }}
+
   <form action="{{action}}" method="post">
     <section>
       <label for="username">Username</label>
@@ -19,5 +11,5 @@
     </section>
     <button type="submit">{{title}}</button>
   </form>
-</body>
-</html>
+
+{{/ layout }}
