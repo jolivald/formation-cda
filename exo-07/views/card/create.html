@@ -1,0 +1,47 @@
+{{#> layout }}
+
+  <form action="{{action}}" method="POST">
+    <section>
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" required autofocus>
+    </section>
+    <section>
+      <label for="content">Content</label>
+      <textarea name="content" id="content" cols="30" rows="10"></textarea>
+    </section>
+    <section>
+      <label for="assigned">Assigned</label>
+      <select name="assigned" id="assigned" required multiple>
+        {{#each users}}
+          <option value="{{this._id}}">{{this.username}}</option>
+        {{/each}}
+      </select>
+    </section>
+    <section>
+      <label for="estimate">Estimate</label>
+      <input id="estimate" name="estimate" type="number" required>
+    </section>
+    <section>
+      <label for="priority">Priority</label>
+      <select name="priority" id="priority" required>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </section>
+    <section>
+      <label for="size">Size</label>
+      <select name="size" id="size" required>
+        <option value="xs">xs</option>
+        <option value="s">s</option>
+        <option value="m" selected>m</option>
+        <option value="l">l</option>
+        <option value="xl">xl</option>
+      </select>
+    </section>
+    <button type="submit">Create</button>
+  </form>
+
+{{/ layout}}

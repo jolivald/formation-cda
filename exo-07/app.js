@@ -10,6 +10,8 @@ import session from 'express-session';
 import flash from 'connect-flash';
 import authRouter from './routes/auth.js';
 import boardRouter from './routes/board.js'
+import cardRouter from './routes/card.js';
+
 import { flashInfoMessages } from './controllers/middlewares.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -42,6 +44,7 @@ app.use(passport.session());
 // routes
 app.use('/', authRouter);
 app.use('/board', boardRouter);
+app.use('/card', cardRouter);
 
 // debug
 app.get('/', (req, res) => {

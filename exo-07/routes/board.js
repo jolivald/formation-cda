@@ -7,7 +7,7 @@ const router = Router();
 
 // read all
 router.get('/', isAuthenticated, async (req, res) => {
-  const boards = await Board.find({ createdBy: req.user._id });
+  const boards = await Board.find({ createdBy: req.user._id }); // TODO: need user._id in query ?
   res.render('board/home', {
     boards,
     title: 'Boards'
@@ -30,7 +30,6 @@ router.post('/create', isScrumMaster, async (req, res) => {
   const { title } = req.body;
   const board = new Board({ title, createdBy: req.user._id, cards: [] });
   const saved = await board.save();
-  console.log({ saved });
   req.flash('info', `Board "${title}" successfully created`);
   res.redirect('/board');
 });
@@ -51,7 +50,7 @@ router.post('/update', isScrumMaster, async (req, res) => {
   res.redirect('/board');
 });
 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isScrumMaster, async (req, res) => {
   const board = await Board.findById(req.params.id);
   res.render('board/delete', {
     board,
@@ -60,7 +59,7 @@ router.get('/delete/:id', async (req, res) => {
   });
 });
 
-router.post('/delete', async (req, res) => {
+router.post('/delete', isScrumMaster, async (req, res) => {
   const board = await Board.findByIdAndDelete(req.body.id).exec();
   req.flash('info', `Board "${board.title}" successfully deleted`);
   res.redirect('/board');

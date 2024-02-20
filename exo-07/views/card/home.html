@@ -1,0 +1,25 @@
+{{#> layout }}
+
+<style>
+  form.card {
+    display: inline;
+  }
+</style>
+
+  <dl>
+    {{#each cards}}
+      <dt><strong>{{this.title}}</strong></dt>
+      <dd>{{this.content}}</dd>
+      <dd>
+        <form action="/card/update/{{this._id}}" method="GET" class="card">
+          <button type="submit">Edit</button>
+        </form>
+        <form action="/card/delete/{{this._id}}" method="GET" class="card">
+          <button type="submit">Delete</button>
+        </form>
+      </dd>
+      <dd>Last update: {{this.updatedAt}}</dd>
+    {{/each}}
+  </dl>
+
+{{/ layout}}
