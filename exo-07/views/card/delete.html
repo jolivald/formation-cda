@@ -1,0 +1,10 @@
+{{#> layout }}
+
+  <form action="{{action}}" method="POST">
+    <input type="hidden" name="id" value="{{card._id}}">
+    <p>Are you sure you want to delete card "{{card.title}}" ?</p>
+    <a href="/card">Go back</a>
+    <button type="submit">Delete</button>
+  </form>
+
+{{/ layout}}

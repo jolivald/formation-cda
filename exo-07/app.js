@@ -25,6 +25,11 @@ app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 
 hbs.registerPartials(__dirname + '/views/partials', err => {});
+/*hbs.registerHelper('ifEquals', (arg1, arg2, options) => {
+  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+});*/
+hbs.registerHelper('isEqual', (arg1, arg2) => arg1 == arg2);
+
 
 // middlewares
 app.use(express.json());

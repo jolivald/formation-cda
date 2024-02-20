@@ -5,7 +5,10 @@ import { userSchema } from './User.js';
 export const cardSchema = new mongoose.Schema({
   title: String,
   content: String,
-  assigned: [mongoose.Schema.Types.ObjectId],
+  assigned: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   estimate: Number,
   priority: {
     type: Number,

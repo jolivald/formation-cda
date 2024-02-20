@@ -32,5 +32,40 @@ router.post('/create', isScrumMaster, async (req, res) => {
   res.redirect('/card');
 });
 
+router.get('/update/:id', isScrumMaster, async (req, res) => {
+  const card = await Card.findById(req.params.id);//.populate('assigned');
+  const users = await User.find({}).lean();
+  users.forEach(user => user.assigned = card.assigned.includes(user._id));
+  res.render('card/update', {
+    card,
+    users,
+    title: 'Update card',
+    action: '/card/update'
+  });
+});
+
+router.post('/update', isScrumMaster, async (req, res) => {
+  const { title, content, assigned, estimate, priority, size } = req.body;
+  const card = new Card({ title, content, assigned, estimate, priority, size });
+  const saved = await card.save();
+  req.flash('info', `Card "${title}" successfully updated`);
+  res.redirect('/card');
+});
+
+router.get('/delete/:id', isScrumMaster, async (req, res) => {
+  const card = await Card.findById(req.params.id);
+  res.render('card/delete', {
+    card,
+    title: 'Delete card',
+    action: '/card/delete'
+  });
+});
+
+router.post('/delete', isScrumMaster, async (req, res) => {
+  const card = await Card.findByIdAndDelete(req.body.id).exec();
+  req.flash('info', `Card "${card.title}" successfully deleted`);
+  res.redirect('/card');
+});
+
 
 export default router;

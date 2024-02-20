@@ -1,0 +1,49 @@
+{{#> layout }}
+
+  <form action="{{action}}" method="POST">
+    <input type="hidden" name="id" value="{{card._id}}">
+    <section>
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" value="{{card.title}}" required autofocus>
+    </section>
+    <section>
+      <label for="content">Content</label>
+      <textarea name="content" id="content" cols="30" rows="10">{{card.content}}</textarea>
+    </section>
+    <section>
+      <label for="assigned">Assigned</label>
+      <select name="assigned" id="assigned" required multiple>
+        {{#each users}}
+          <option value="{{this._id}}" {{#if this.assigned}}selected{{/if}}>{{this.username}}</option>
+        {{/each}}
+      </select>
+    </section>
+    <section>
+      <label for="estimate">Estimate</label>
+      <input id="estimate" name="estimate" type="number" value="{{card.estimate}}" required>
+    </section>
+    <section>
+      <label for="priority">Priority</label>
+      <select name="priority" id="priority" required>
+        <option value="0" {{#if (isEqual card.priority 0)}}selected{{/if}}>0</option>
+        <option value="1" {{#if (isEqual card.priority 1)}}selected{{/if}}>1</option>
+        <option value="2" {{#if (isEqual card.priority 2)}}selected{{/if}}>2</option>
+        <option value="3" {{#if (isEqual card.priority 3)}}selected{{/if}}>3</option>
+        <option value="4" {{#if (isEqual card.priority 4)}}selected{{/if}}>4</option>
+      </select>
+    </section>
+    <section>
+      <label for="size">Size</label>
+      <select name="size" id="size" required>
+        <option value="xs" {{#if (isEqual card.size "xs") }}selected{{/if}}>xs</option>
+        <option value="s"  {{#if (isEqual card.size "s")  }}selected{{/if}}>s</option>
+        <option value="m"  {{#if (isEqual card.size "m")  }}selected{{/if}}>m</option>
+        <option value="l"  {{#if (isEqual card.size "l")  }}selected{{/if}}>l</option>
+        <option value="xl" {{#if (isEqual card.size "xl") }}selected{{/if}}>xl</option>
+      </select>
+    </section>
+    <p>Last update: {{card.updatedAt}}</p>
+    <button type="submit">Update</button>
+  </form>
+
+{{/ layout}}
