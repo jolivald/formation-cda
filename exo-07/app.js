@@ -4,9 +4,11 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import passport from 'passport';
 import hbs from 'hbs';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
+import cookieSession from 'cookie-session';
+//import session from 'express-session';
 import flash from 'connect-flash';
 import authRouter from './routes/auth.js';
 import boardRouter from './routes/board.js'
@@ -25,20 +27,21 @@ app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 
 hbs.registerPartials(__dirname + '/views/partials', err => {});
-/*hbs.registerHelper('ifEquals', (arg1, arg2, options) => {
-  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-});*/
 hbs.registerHelper('isEqual', (arg1, arg2) => arg1 == arg2);
+
 
 
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({
+app.use(cookieSession({
   secret: SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true
+  sameSite: 'none'
+}));
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials :  true
 }));
 app.use(flash());
 app.use(flashInfoMessages);
