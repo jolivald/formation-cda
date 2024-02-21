@@ -45,9 +45,8 @@ router.get('/update/:id', isScrumMaster, async (req, res) => {
 });
 
 router.post('/update', isScrumMaster, async (req, res) => {
-  const { title, content, assigned, estimate, priority, size } = req.body;
-  const card = new Card({ title, content, assigned, estimate, priority, size });
-  const saved = await card.save();
+  const { id, title, content, assigned, estimate, priority, size } = req.body;
+  const card = await Card.findByIdAndUpdate(id, { title, content, assigned, estimate, priority, size });
   req.flash('info', `Card "${title}" successfully updated`);
   res.redirect('/card');
 });

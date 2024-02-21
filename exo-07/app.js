@@ -14,7 +14,7 @@ import authRouter from './routes/auth.js';
 import boardRouter from './routes/board.js'
 import cardRouter from './routes/card.js';
 
-import { flashInfoMessages } from './controllers/middlewares.js';
+import { flashInfoMessages, fixCookieSession } from './controllers/middlewares.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,6 +39,7 @@ app.use(cookieSession({
   secret: SESSION_SECRET,
   sameSite: 'none'
 }));
+app.use(fixCookieSession);
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials :  true

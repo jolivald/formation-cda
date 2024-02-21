@@ -17,3 +17,15 @@ export const flashInfoMessages = (req, res, next) => {
   res.locals.messages = req.flash('info');
   next();
 };
+
+// fix bug: https://github.com/jaredhanson/passport/issues/904
+// register regenerate & save after the cookieSession middleware initialization
+export const fixCookieSession = (req, res, next) => {
+  if (req.session && !req.session.regenerate) {
+    req.session.regenerate = (cb) => { cb() };
+  }
+  if (req.session && !req.session.save) {
+      req.session.save = (cb) => { cb() };
+  }
+  next();
+};

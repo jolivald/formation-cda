@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { userSchema } from './User.js';
 
-// TODO: check mongoose enum for priority, estimate & size
+
 export const cardSchema = new mongoose.Schema({
   title: String,
   content: String,
