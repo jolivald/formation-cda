@@ -29,3 +29,12 @@ export const fixCookieSession = (req, res, next) => {
   }
   next();
 };
+
+export const acceptJsonHack = (req, res, next) => {
+  if (req.accepts('json')){
+    res.render = (view, locals, cb) => {
+      res.json(JSON.stringify(locals));
+    };
+  }
+  next();
+};

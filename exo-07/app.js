@@ -14,7 +14,7 @@ import authRouter from './routes/auth.js';
 import boardRouter from './routes/board.js'
 import cardRouter from './routes/card.js';
 
-import { flashInfoMessages, fixCookieSession } from './controllers/middlewares.js';
+import { flashInfoMessages, fixCookieSession, acceptJsonHack } from './controllers/middlewares.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +33,7 @@ hbs.registerHelper('isEqual', (arg1, arg2) => arg1 == arg2);
 
 // middlewares
 app.use(express.json());
+app.use(acceptJsonHack);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cookieSession({
