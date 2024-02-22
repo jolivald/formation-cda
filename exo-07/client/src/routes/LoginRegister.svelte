@@ -35,7 +35,6 @@ const submitLoginForm = () => {
       if (!res.ok){ throw new Error(`submit login form error: ${res.status}`); }
       return res.json();
     })
-    .then(json => JSON.parse(json))
     .then(data => {
       if (data.username){
         $logged =true;
@@ -45,6 +44,7 @@ const submitLoginForm = () => {
     .catch(err => console.error(err));
 };
 
+//TODO: implement submit register form
 const submitRegisterForm = () => {
 
 };

@@ -31,9 +31,9 @@ export const fixCookieSession = (req, res, next) => {
 };
 
 export const acceptJsonHack = (req, res, next) => {
-  if (req.accepts('json')){
+  if ((req.get('Accept') || '').includes('application/json')){
     res.render = (view, locals, cb) => {
-      res.json(JSON.stringify(locals));
+      res.json(locals);
     };
   }
   next();
