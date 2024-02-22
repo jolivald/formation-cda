@@ -1,9 +1,7 @@
 <script>
-	import LoginRegister from './LoginRegister.svelte';
+
+import { username } from '../globalState.js';
+
 </script>
 
-<h3>Welcome to Kanban</h3>
-<hr>
-
-<LoginRegister tab={"login"} />
-
+<p>Welcome back {$username}!</p>
