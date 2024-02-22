@@ -45,6 +45,7 @@ router.get('/update/:id', isScrumMaster, async (req, res) => {
 
 router.post('/update', isScrumMaster, async (req, res) => {
   const { id, title } = req.body;
+  console.log('board updated:', req.body);
   const board = await Board.findByIdAndUpdate(id, { title }).exec();
   req.flash('info', `Board "${title}" successfully updated`);
   res.redirect('/board');

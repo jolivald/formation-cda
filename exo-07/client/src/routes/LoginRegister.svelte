@@ -14,18 +14,6 @@ let registerPassword = '';
 const changeTabTo = (newTab) => () => { tab = newTab; };
 
 const submitLoginForm = () => {
-  /*fetch('http://localhost:3000/login', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username: loginUsername,
-      password: loginPassword
-    })
-  })*/
   fetchPOST('login', {
     body: JSON.stringify({
       username: loginUsername,
